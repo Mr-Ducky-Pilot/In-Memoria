@@ -37,25 +37,25 @@ export class ProjectIntelligenceProvider implements vscode.TreeDataProvider<Inte
             'Tech Stack',
             vscode.TreeItemCollapsibleState.Collapsed,
             'techStack',
-            { icon: 'package' }
+            { icon: 'package', iconColor: 'charts.blue' }
           ),
           new IntelligenceItem(
             'Entry Points',
             vscode.TreeItemCollapsibleState.Collapsed,
             'entryPoints',
-            { icon: 'symbol-event' }
+            { icon: 'debug-start', iconColor: 'charts.green' }
           ),
           new IntelligenceItem(
             'Key Directories',
             vscode.TreeItemCollapsibleState.Collapsed,
             'keyDirectories',
-            { icon: 'folder' }
+            { icon: 'folder-library', iconColor: 'charts.yellow' }
           ),
           new IntelligenceItem(
             `Architecture: ${this.blueprint.architecture}`,
             vscode.TreeItemCollapsibleState.None,
             'architecture',
-            { icon: 'organization' }
+            { icon: 'git-branch', iconColor: 'charts.purple' }
           )
         ];
 
@@ -185,6 +185,7 @@ class IntelligenceItem extends vscode.TreeItem {
     public readonly contextValue: string,
     options?: {
       icon?: string;
+      iconColor?: string;
       description?: string;
       files?: string[];
       filePath?: string;
@@ -193,7 +194,10 @@ class IntelligenceItem extends vscode.TreeItem {
     super(label, collapsibleState);
 
     if (options?.icon) {
-      this.iconPath = new vscode.ThemeIcon(options.icon);
+      this.iconPath = new vscode.ThemeIcon(
+        options.icon,
+        options.iconColor ? new vscode.ThemeColor(options.iconColor) : undefined
+      );
     }
 
     if (options?.description) {
@@ -229,7 +233,7 @@ class IntelligenceItem extends vscode.TreeItem {
       case 'feature':
         return `Feature with ${this.files?.length || 0} implementation files`;
       default:
-        return this.label || '';
+        return typeof this.label === 'string' ? this.label : (this.label?.label || '');
     }
   }
 }

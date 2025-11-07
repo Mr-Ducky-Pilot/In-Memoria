@@ -44,52 +44,52 @@
     "commands": [
       {
         "command": "inMemoria.showDashboard",
-        "title": "In Memoria: Show Intelligence Dashboard",
+        "title": "In Memoria: 📊 Show Intelligence Dashboard",
         "icon": "$(dashboard)"
       },
       {
         "command": "inMemoria.showRelationshipGraph",
-        "title": "In Memoria: Show Relationship Graph",
+        "title": "In Memoria: 🔗 Show Relationship Graph",
         "icon": "$(graph)"
       },
       {
         "command": "inMemoria.showPatternExplorer",
-        "title": "In Memoria: Show Pattern Explorer",
+        "title": "In Memoria: 🔍 Explore Patterns",
         "icon": "$(search)"
       },
       {
         "command": "inMemoria.showWorkSession",
-        "title": "In Memoria: Show Work Session",
-        "icon": "$(symbol-event)"
+        "title": "In Memoria: 💼 Show Work Session",
+        "icon": "$(history)"
       },
       {
         "command": "inMemoria.showFileIntelligence",
-        "title": "In Memoria: Show File Intelligence",
+        "title": "In Memoria: 📄 Show File Intelligence",
         "icon": "$(file-code)"
       },
       {
         "command": "inMemoria.showFeatureRouter",
-        "title": "In Memoria: Show Feature Router",
+        "title": "In Memoria: 🗺️ Route Feature to Files",
         "icon": "$(map)"
       },
       {
         "command": "inMemoria.refreshIntelligence",
-        "title": "In Memoria: Refresh Intelligence",
+        "title": "In Memoria: 🔄 Refresh Intelligence",
         "icon": "$(refresh)"
       },
       {
         "command": "inMemoria.learnCodebase",
-        "title": "In Memoria: Learn Codebase",
+        "title": "In Memoria: 🧠 Learn Codebase",
         "icon": "$(sync)"
       },
       {
         "command": "inMemoria.searchConcepts",
-        "title": "In Memoria: Search Concepts",
+        "title": "In Memoria: 🔎 Search Concepts",
         "icon": "$(search)"
       },
       {
         "command": "inMemoria.routeFeature",
-        "title": "In Memoria: Route Feature to Files",
+        "title": "In Memoria: 🎯 Route Feature to Files",
         "icon": "$(location)"
       },
       {
@@ -140,7 +140,19 @@
     "viewsWelcome": [
       {
         "view": "inMemoriaProjectView",
-        "contents": "No In Memoria intelligence found.\n[Learn Codebase](command:inMemoria.learnCodebase)\n[Show Dashboard](command:inMemoria.showDashboard)"
+        "contents": "🚀 Welcome to In Memoria!\n\nStart by learning your codebase to unlock AI-powered insights, patterns, and intelligence.\n\n[$(sync) Learn Codebase](command:inMemoria.learnCodebase)\n\nOr explore the capabilities:\n\n[$(dashboard) Show Dashboard](command:inMemoria.showDashboard)\n[$(graph) Relationship Graph](command:inMemoria.showRelationshipGraph)"
+      },
+      {
+        "view": "inMemoriaPatternsView",
+        "contents": "No patterns discovered yet.\n\n[$(sync) Learn Codebase](command:inMemoria.learnCodebase) to identify coding patterns and recommendations."
+      },
+      {
+        "view": "inMemoriaWorkView",
+        "contents": "No active work session.\n\nStart coding to track your current work session, pending tasks, and recent decisions."
+      },
+      {
+        "view": "inMemoriaInsightsView",
+        "contents": "AI insights will appear here.\n\nUse the contribute_insights tool to add AI-generated insights to your codebase."
       }
     ],
     "menus": {
@@ -220,9 +232,9 @@
   "devDependencies": {
     "@types/node": "^18.0.0",
     "@types/vscode": "^1.85.0",
-    "@typescript-eslint/eslint-plugin": "^6.0.0",
-    "@typescript-eslint/parser": "^6.0.0",
-    "eslint": "^8.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "^9.0.0",
     "typescript": "^5.3.0",
     "@vscode/vsce": "^2.22.0"
   },

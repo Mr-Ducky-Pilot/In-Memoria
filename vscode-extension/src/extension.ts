@@ -110,7 +110,7 @@ export async function activate(context: vscode.ExtensionContext) {
           title: 'Learning codebase with In Memoria...',
           cancellable: false
         },
-        async (progress) => {
+        async (_progress) => {
           try {
             const result = await mcpClient.learnCodebase(path, false);
             vscode.window.showInformationMessage(

@@ -32,7 +32,7 @@ export class PatternsProvider implements vscode.TreeDataProvider<PatternItem> {
           try {
             const result = await this.mcpClient.getPatternRecommendations('general patterns');
             this.patterns = result.recommendations;
-          } catch (error) {
+          } catch {
             // If no patterns learned yet, return empty
             return [];
           }
@@ -62,7 +62,7 @@ export class PatternsProvider implements vscode.TreeDataProvider<PatternItem> {
               `High Confidence (${highConfidence.length})`,
               vscode.TreeItemCollapsibleState.Expanded,
               'group',
-              { icon: 'star-full', patterns: highConfidence }
+              { icon: 'star-full', iconColor: 'charts.green', patterns: highConfidence }
             )
           );
         }
@@ -73,7 +73,7 @@ export class PatternsProvider implements vscode.TreeDataProvider<PatternItem> {
               `Medium Confidence (${mediumConfidence.length})`,
               vscode.TreeItemCollapsibleState.Collapsed,
               'group',
-              { icon: 'star-half', patterns: mediumConfidence }
+              { icon: 'star-half', iconColor: 'charts.orange', patterns: mediumConfidence }
             )
           );
         }
@@ -84,7 +84,7 @@ export class PatternsProvider implements vscode.TreeDataProvider<PatternItem> {
               `Low Confidence (${lowConfidence.length})`,
               vscode.TreeItemCollapsibleState.Collapsed,
               'group',
-              { icon: 'star-empty', patterns: lowConfidence }
+              { icon: 'circle-outline', iconColor: 'charts.gray', patterns: lowConfidence }
             )
           );
         }
@@ -172,6 +172,7 @@ class PatternItem extends vscode.TreeItem {
     public readonly contextValue: string,
     options?: {
       icon?: string;
+      iconColor?: string;
       description?: string;
       patterns?: PatternRecommendation[];
       pattern?: PatternRecommendation;
@@ -181,7 +182,10 @@ class PatternItem extends vscode.TreeItem {
     super(label, collapsibleState);
 
     if (options?.icon) {
-      this.iconPath = new vscode.ThemeIcon(options.icon);
+      this.iconPath = new vscode.ThemeIcon(
+        options.icon,
+        options.iconColor ? new vscode.ThemeColor(options.iconColor) : undefined
+      );
     }
 
     if (options?.description) {
@@ -207,6 +211,6 @@ class PatternItem extends vscode.TreeItem {
     if (this.pattern) {
       return `${this.pattern.pattern}\n\nConfidence: ${(this.pattern.confidence * 100).toFixed(0)}%\n\n${this.pattern.description}`;
     }
-    return this.label || '';
+    return typeof this.label === 'string' ? this.label : (this.label?.label || '');
   }
 }

@@ -54,19 +54,23 @@ class InsightItem extends vscode.TreeItem {
     public readonly contextValue: string,
     options?: {
       icon?: string;
+      iconColor?: string;
       description?: string;
     }
   ) {
     super(label, collapsibleState);
 
     if (options?.icon) {
-      this.iconPath = new vscode.ThemeIcon(options.icon);
+      this.iconPath = new vscode.ThemeIcon(
+        options.icon,
+        options.iconColor ? new vscode.ThemeColor(options.iconColor) : undefined
+      );
     }
 
     if (options?.description) {
       this.description = options.description;
     }
 
-    this.tooltip = this.label || '';
+    this.tooltip = typeof this.label === 'string' ? this.label : (this.label?.label || '');
   }
 }

@@ -93,6 +93,18 @@ export interface AIInsight {
   createdAt: Date;
 }
 
+// Type guard for MCP content response
+interface ContentBlock {
+  type: string;
+  text?: string;
+  [key: string]: any;
+}
+
+interface ToolResponse {
+  content: ContentBlock[];
+  [key: string]: any;
+}
+
 export class InMemoriaClient {
   private client?: Client;
   private transport?: StdioClientTransport;
@@ -154,11 +166,11 @@ export class InMemoriaClient {
         path,
         includeFeatureMap: true
       }
-    });
+    }) as ToolResponse;
 
     if (response.content && response.content.length > 0) {
       const content = response.content[0];
-      if (content.type === 'text') {
+      if (content.type === 'text' && content.text) {
         return JSON.parse(content.text);
       }
     }
@@ -181,11 +193,11 @@ export class InMemoriaClient {
         conceptType,
         limit
       }
-    });
+    }) as ToolResponse;
 
     if (response.content && response.content.length > 0) {
       const content = response.content[0];
-      if (content.type === 'text') {
+      if (content.type === 'text' && content.text) {
         return JSON.parse(content.text);
       }
     }
@@ -208,11 +220,11 @@ export class InMemoriaClient {
         problemDescription,
         includeRelatedFiles: true
       }
-    });
+    }) as ToolResponse;
 
     if (response.content && response.content.length > 0) {
       const content = response.content[0];
-      if (content.type === 'text') {
+      if (content.type === 'text' && content.text) {
         return JSON.parse(content.text);
       }
     }
@@ -231,11 +243,11 @@ export class InMemoriaClient {
         includeRecentActivity: true,
         includeWorkContext
       }
-    });
+    }) as ToolResponse;
 
     if (response.content && response.content.length > 0) {
       const content = response.content[0];
-      if (content.type === 'text') {
+      if (content.type === 'text' && content.text) {
         return JSON.parse(content.text);
       }
     }
@@ -254,11 +266,11 @@ export class InMemoriaClient {
         problemDescription,
         includeFileRouting: true
       }
-    });
+    }) as ToolResponse;
 
     if (response.content && response.content.length > 0) {
       const content = response.content[0];
-      if (content.type === 'text') {
+      if (content.type === 'text' && content.text) {
         return JSON.parse(content.text);
       }
     }
@@ -274,11 +286,11 @@ export class InMemoriaClient {
     const response = await this.client.callTool({
       name: 'get_intelligence_metrics',
       arguments: {}
-    });
+    }) as ToolResponse;
 
     if (response.content && response.content.length > 0) {
       const content = response.content[0];
-      if (content.type === 'text') {
+      if (content.type === 'text' && content.text) {
         return JSON.parse(content.text);
       }
     }
@@ -303,11 +315,11 @@ export class InMemoriaClient {
         path,
         force
       }
-    });
+    }) as ToolResponse;
 
     if (response.content && response.content.length > 0) {
       const content = response.content[0];
-      if (content.type === 'text') {
+      if (content.type === 'text' && content.text) {
         return JSON.parse(content.text);
       }
     }
@@ -327,11 +339,11 @@ export class InMemoriaClient {
         type,
         limit: 20
       }
-    });
+    }) as ToolResponse;
 
     if (response.content && response.content.length > 0) {
       const content = response.content[0];
-      if (content.type === 'text') {
+      if (content.type === 'text' && content.text) {
         return JSON.parse(content.text);
       }
     }

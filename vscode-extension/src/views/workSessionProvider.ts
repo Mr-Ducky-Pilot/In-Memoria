@@ -43,7 +43,7 @@ export class WorkSessionProvider implements vscode.TreeDataProvider<WorkItem> {
                 `Current Feature: ${work.lastFeature}`,
                 vscode.TreeItemCollapsibleState.None,
                 'currentFeature',
-                { icon: 'symbol-event' }
+                { icon: 'rocket', iconColor: 'charts.purple' }
               )
             );
           }
@@ -54,7 +54,7 @@ export class WorkSessionProvider implements vscode.TreeDataProvider<WorkItem> {
                 `Current Files (${work.currentFiles.length})`,
                 vscode.TreeItemCollapsibleState.Expanded,
                 'currentFiles',
-                { icon: 'files', files: work.currentFiles }
+                { icon: 'file-code', iconColor: 'charts.blue', files: work.currentFiles }
               )
             );
           }
@@ -65,7 +65,7 @@ export class WorkSessionProvider implements vscode.TreeDataProvider<WorkItem> {
                 `Pending Tasks (${work.pendingTasks.length})`,
                 vscode.TreeItemCollapsibleState.Expanded,
                 'pendingTasks',
-                { icon: 'checklist', tasks: work.pendingTasks }
+                { icon: 'tasklist', iconColor: 'charts.orange', tasks: work.pendingTasks }
               )
             );
           }
@@ -76,7 +76,7 @@ export class WorkSessionProvider implements vscode.TreeDataProvider<WorkItem> {
                 `Recent Decisions (${work.recentDecisions.length})`,
                 vscode.TreeItemCollapsibleState.Collapsed,
                 'recentDecisions',
-                { icon: 'milestone', decisions: work.recentDecisions }
+                { icon: 'lightbulb', iconColor: 'charts.yellow', decisions: work.recentDecisions }
               )
             );
           }
@@ -188,6 +188,7 @@ class WorkItem extends vscode.TreeItem {
     public readonly contextValue: string,
     options?: {
       icon?: string;
+      iconColor?: string;
       description?: string;
       files?: string[];
       tasks?: string[];
@@ -199,7 +200,10 @@ class WorkItem extends vscode.TreeItem {
     super(label, collapsibleState);
 
     if (options?.icon) {
-      this.iconPath = new vscode.ThemeIcon(options.icon);
+      this.iconPath = new vscode.ThemeIcon(
+        options.icon,
+        options.iconColor ? new vscode.ThemeColor(options.iconColor) : undefined
+      );
     }
 
     if (options?.description) {
@@ -247,7 +251,7 @@ class WorkItem extends vscode.TreeItem {
       case 'recentFocus':
         return 'Areas of focus in recent development';
       default:
-        return this.label || '';
+        return typeof this.label === 'string' ? this.label : (this.label?.label || '');
     }
   }
 }
