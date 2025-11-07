@@ -1,0 +1,246 @@
+{
+  "name": "in-memoria-visualizer",
+  "displayName": "In Memoria Visualizer",
+  "description": "Visualize and explore codebase intelligence captured by In Memoria MCP server",
+  "version": "0.1.0",
+  "publisher": "MrDuck",
+  "author": {
+    "name": "Omprakash J",
+    "email": "omprakashjha02@gmail.com"
+  },
+  "icon": "resources/icon.png",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pi22by7/in-memoria.git",
+    "directory": "vscode-extension"
+  },
+  "bugs": {
+    "url": "https://github.com/pi22by7/in-memoria/issues"
+  },
+  "homepage": "https://github.com/pi22by7/in-memoria#readme",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Visualization",
+    "Data Science",
+    "Other"
+  ],
+  "keywords": [
+    "in-memoria",
+    "mcp",
+    "codebase-intelligence",
+    "visualization",
+    "code-analysis",
+    "semantic-search",
+    "pattern-learning"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "inMemoria.showDashboard",
+        "title": "In Memoria: 📊 Show Intelligence Dashboard",
+        "icon": "$(dashboard)"
+      },
+      {
+        "command": "inMemoria.showRelationshipGraph",
+        "title": "In Memoria: 🔗 Show Relationship Graph",
+        "icon": "$(graph)"
+      },
+      {
+        "command": "inMemoria.showPatternExplorer",
+        "title": "In Memoria: 🔍 Explore Patterns",
+        "icon": "$(search)"
+      },
+      {
+        "command": "inMemoria.showWorkSession",
+        "title": "In Memoria: 💼 Show Work Session",
+        "icon": "$(history)"
+      },
+      {
+        "command": "inMemoria.showFileIntelligence",
+        "title": "In Memoria: 📄 Show File Intelligence",
+        "icon": "$(file-code)"
+      },
+      {
+        "command": "inMemoria.showFeatureRouter",
+        "title": "In Memoria: 🗺️ Route Feature to Files",
+        "icon": "$(map)"
+      },
+      {
+        "command": "inMemoria.refreshIntelligence",
+        "title": "In Memoria: 🔄 Refresh Intelligence",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "inMemoria.learnCodebase",
+        "title": "In Memoria: 🧠 Learn Codebase",
+        "icon": "$(sync)"
+      },
+      {
+        "command": "inMemoria.searchConcepts",
+        "title": "In Memoria: 🔎 Search Concepts",
+        "icon": "$(search)"
+      },
+      {
+        "command": "inMemoria.routeFeature",
+        "title": "In Memoria: 🎯 Route Feature to Files",
+        "icon": "$(location)"
+      },
+      {
+        "command": "inMemoria.treeView.refresh",
+        "title": "Refresh",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "inMemoria.treeView.showItem",
+        "title": "Show Details",
+        "icon": "$(eye)"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "inMemoriaExplorer",
+          "title": "In Memoria",
+          "icon": "resources/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "inMemoriaExplorer": [
+        {
+          "id": "inMemoriaProjectView",
+          "name": "Project Intelligence",
+          "icon": "resources/icon.svg",
+          "contextualTitle": "In Memoria"
+        },
+        {
+          "id": "inMemoriaPatternsView",
+          "name": "Patterns",
+          "icon": "resources/icon.svg"
+        },
+        {
+          "id": "inMemoriaWorkView",
+          "name": "Work Session",
+          "icon": "resources/icon.svg"
+        },
+        {
+          "id": "inMemoriaInsightsView",
+          "name": "AI Insights",
+          "icon": "resources/icon.svg"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "inMemoriaProjectView",
+        "contents": "🚀 Welcome to In Memoria!\n\nStart by learning your codebase to unlock AI-powered insights, patterns, and intelligence.\n\n[$(sync) Learn Codebase](command:inMemoria.learnCodebase)\n\nOr explore the capabilities:\n\n[$(dashboard) Show Dashboard](command:inMemoria.showDashboard)\n[$(graph) Relationship Graph](command:inMemoria.showRelationshipGraph)"
+      },
+      {
+        "view": "inMemoriaPatternsView",
+        "contents": "No patterns discovered yet.\n\n[$(sync) Learn Codebase](command:inMemoria.learnCodebase) to identify coding patterns and recommendations."
+      },
+      {
+        "view": "inMemoriaWorkView",
+        "contents": "No active work session.\n\nStart coding to track your current work session, pending tasks, and recent decisions."
+      },
+      {
+        "view": "inMemoriaInsightsView",
+        "contents": "AI insights will appear here.\n\nUse the contribute_insights tool to add AI-generated insights to your codebase."
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "inMemoria.treeView.refresh",
+          "when": "view =~ /^inMemoria/",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "inMemoria.treeView.showItem",
+          "when": "view =~ /^inMemoria/",
+          "group": "inline"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "inMemoria.showFileIntelligence",
+          "group": "inMemoria",
+          "when": "editorTextFocus"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "inMemoria.treeView.showItem",
+          "when": "false"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "In Memoria Visualizer",
+      "properties": {
+        "inMemoria.serverCommand": {
+          "type": "string",
+          "default": "npx in-memoria server",
+          "description": "Command to start In Memoria MCP server"
+        },
+        "inMemoria.autoConnect": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically connect to In Memoria server on startup"
+        },
+        "inMemoria.refreshInterval": {
+          "type": "number",
+          "default": 30000,
+          "description": "Auto-refresh interval in milliseconds (0 to disable)"
+        },
+        "inMemoria.graphLayout": {
+          "type": "string",
+          "enum": ["force", "hierarchical", "circular"],
+          "default": "force",
+          "description": "Default layout algorithm for relationship graphs"
+        },
+        "inMemoria.showComplexityMetrics": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show complexity metrics in file intelligence view"
+        },
+        "inMemoria.maxGraphNodes": {
+          "type": "number",
+          "default": 100,
+          "description": "Maximum number of nodes to display in relationship graph"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile",
+    "lint": "eslint src --ext ts",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "^9.0.0",
+    "typescript": "^5.3.0",
+    "@vscode/vsce": "^2.22.0"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.20.2",
+    "d3": "^7.8.5",
+    "chart.js": "^4.4.1"
+  }
+}
