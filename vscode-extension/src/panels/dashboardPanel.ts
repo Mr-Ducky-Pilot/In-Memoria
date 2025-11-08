@@ -53,6 +53,7 @@ export class DashboardPanel {
     <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline';">
       <title>In Memoria Dashboard</title>
       <style>
         body { display: flex; align-items: center; justify-content: center; height: 100vh; font-family: var(--vscode-font-family); }
@@ -74,6 +75,7 @@ export class DashboardPanel {
     <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline';">
       <title>In Memoria Dashboard</title>
       <style>
         body { font-family: var(--vscode-font-family); padding: 20px; }
@@ -96,6 +98,7 @@ export class DashboardPanel {
     <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline';">
       <title>In Memoria Dashboard</title>
       <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }

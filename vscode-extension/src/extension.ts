@@ -154,8 +154,12 @@ export async function activate(context: vscode.ExtensionContext) {
             });
 
             if (selected) {
-              // TODO: Show detailed concept view
-              vscode.window.showInformationMessage(`Concept: ${selected.label}`);
+              // Show detailed information message with concept details
+              const selectedInsight = insights.insights.find(i => i.concept === selected.label);
+              if (selectedInsight) {
+                const message = `Concept: ${selectedInsight.concept}\nFrequency: ${selectedInsight.usage.frequency.toFixed(0)}\nRelations: ${selectedInsight.relationships.join(', ')}`;
+                vscode.window.showInformationMessage(message);
+              }
             }
           }
         } catch (error: any) {

@@ -45,7 +45,11 @@ export class RelationshipGraphPanel {
 
   private _getErrorHtml(error: string): string {
     return `<!DOCTYPE html>
-    <html><body style="font-family: var(--vscode-font-family); padding: 20px;">
+    <html>
+    <head>
+      <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline';">
+    </head>
+    <body style="font-family: var(--vscode-font-family); padding: 20px;">
       <h2 style="color: var(--vscode-errorForeground);">⚠ Error Loading Graph</h2>
       <p>${error}</p>
     </body></html>`;
@@ -74,6 +78,7 @@ export class RelationshipGraphPanel {
     <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline';">
       <title>Relationship Graph</title>
       <style>
         body { margin: 0; padding: 0; font-family: var(--vscode-font-family); overflow: hidden; background: var(--vscode-editor-background); }
