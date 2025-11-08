@@ -46,7 +46,11 @@ export class PatternExplorerPanel {
 
   private _getErrorHtml(error: string): string {
     return `<!DOCTYPE html>
-    <html><body style="font-family: var(--vscode-font-family); padding: 20px;">
+    <html>
+    <head>
+      <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline';">
+    </head>
+    <body style="font-family: var(--vscode-font-family); padding: 20px;">
       <h2 style="color: var(--vscode-errorForeground);">⚠ Error Loading Patterns</h2>
       <p>${error}</p>
     </body></html>`;
@@ -57,6 +61,7 @@ export class PatternExplorerPanel {
     <html lang="en">
     <head>
       <meta charset="UTF-8">
+      <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline';">
       <title>Pattern Explorer</title>
       <style>
         body { font-family: var(--vscode-font-family); padding: 20px; background: var(--vscode-editor-background); color: var(--vscode-foreground); }

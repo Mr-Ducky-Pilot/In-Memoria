@@ -1,10 +1,45 @@
+# Build and development files
 .vscode/**
 .vscode-test/**
 src/**
 .gitignore
-.eslintrc.json
-tsconfig.json
+.yarnrc
+vsc-extension-quickstart.md
+**/tsconfig.json
+**/.eslintrc.json
+eslint.config.mjs
 **/*.map
 **/*.ts
-!dist/**/*.js
-node_modules/**
+
+# Documentation and markdown files
+*.md
+!README.md
+!CHANGELOG.md
+!LICENSE
+
+# Node and dependencies
+node_modules
+.npmignore
+package-lock.json
+yarn.lock
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Test files
+**/*.test.ts
+**/*.spec.ts
+test/**
+tests/**
+
+# CI/CD
+.github/**
+.travis.yml
+.gitlab-ci.yml
+
+# Editor files
+*.swp
+*.swo
+*~
+.idea/**
