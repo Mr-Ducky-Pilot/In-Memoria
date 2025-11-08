@@ -18,47 +18,53 @@ let insightsProvider: InsightsProvider;
 let statusBarItem: vscode.StatusBarItem;
 
 export async function activate(context: vscode.ExtensionContext) {
-  console.log('In Memoria Visualizer is now active!');
+  try {
+    console.log('In Memoria Visualizer: Starting activation...');
 
-  // Initialize MCP client
-  mcpClient = new InMemoriaClient();
+    // Initialize MCP client
+    mcpClient = new InMemoriaClient();
+    console.log('In Memoria Visualizer: MCP client initialized');
 
-  // Create status bar item
-  statusBarItem = vscode.window.createStatusBarItem(
-    vscode.StatusBarAlignment.Right,
-    100
-  );
-  statusBarItem.text = '$(sync~spin) In Memoria: Connecting...';
-  statusBarItem.command = 'inMemoria.showDashboard';
-  statusBarItem.show();
-  context.subscriptions.push(statusBarItem);
+    // Create status bar item
+    statusBarItem = vscode.window.createStatusBarItem(
+      vscode.StatusBarAlignment.Right,
+      100
+    );
+    statusBarItem.text = '$(sync~spin) In Memoria: Connecting...';
+    statusBarItem.command = 'inMemoria.showDashboard';
+    statusBarItem.show();
+    context.subscriptions.push(statusBarItem);
+    console.log('In Memoria Visualizer: Status bar created');
 
-  // Initialize tree view providers
-  projectIntelligenceProvider = new ProjectIntelligenceProvider(mcpClient);
-  patternsProvider = new PatternsProvider(mcpClient);
-  workSessionProvider = new WorkSessionProvider(mcpClient);
-  insightsProvider = new InsightsProvider(mcpClient);
+    // Initialize tree view providers
+    projectIntelligenceProvider = new ProjectIntelligenceProvider(mcpClient);
+    patternsProvider = new PatternsProvider(mcpClient);
+    workSessionProvider = new WorkSessionProvider(mcpClient);
+    insightsProvider = new InsightsProvider(mcpClient);
+    console.log('In Memoria Visualizer: Tree view providers initialized');
 
-  // Register tree views
-  vscode.window.registerTreeDataProvider(
-    'inMemoriaProjectView',
-    projectIntelligenceProvider
-  );
-  vscode.window.registerTreeDataProvider(
-    'inMemoriaPatternsView',
-    patternsProvider
-  );
-  vscode.window.registerTreeDataProvider(
-    'inMemoriaWorkView',
-    workSessionProvider
-  );
-  vscode.window.registerTreeDataProvider(
-    'inMemoriaInsightsView',
-    insightsProvider
-  );
+    // Register tree views
+    vscode.window.registerTreeDataProvider(
+      'inMemoriaProjectView',
+      projectIntelligenceProvider
+    );
+    vscode.window.registerTreeDataProvider(
+      'inMemoriaPatternsView',
+      patternsProvider
+    );
+    vscode.window.registerTreeDataProvider(
+      'inMemoriaWorkView',
+      workSessionProvider
+    );
+    vscode.window.registerTreeDataProvider(
+      'inMemoriaInsightsView',
+      insightsProvider
+    );
+    console.log('In Memoria Visualizer: Tree views registered');
 
-  // Register commands
-  context.subscriptions.push(
+    // Register commands
+    console.log('In Memoria Visualizer: Registering commands...');
+    context.subscriptions.push(
     vscode.commands.registerCommand('inMemoria.showDashboard', () => {
       DashboardPanel.render(context.extensionUri, mcpClient);
     }),
@@ -205,29 +211,41 @@ export async function activate(context: vscode.ExtensionContext) {
     })
   );
 
-  // Auto-connect if configured
-  const config = vscode.workspace.getConfiguration('inMemoria');
-  if (config.get('autoConnect', true)) {
-    try {
-      await mcpClient.connect();
-      updateStatusBar('connected');
-      await refreshAllViews();
-    } catch (error: any) {
-      updateStatusBar('disconnected', error.message);
-      vscode.window.showWarningMessage(
-        `Could not connect to In Memoria server: ${error.message}. Run "in-memoria server" in your terminal.`
-      );
-    }
-  }
+    console.log('In Memoria Visualizer: Commands registered successfully');
 
-  // Set up auto-refresh if configured
-  const refreshInterval = config.get('refreshInterval', 30000);
-  if (refreshInterval > 0) {
-    setInterval(() => {
-      if (mcpClient.isConnected()) {
+    // Auto-connect if configured
+    const config = vscode.workspace.getConfiguration('inMemoria');
+    if (config.get('autoConnect', true)) {
+      try {
+        console.log('In Memoria Visualizer: Attempting to connect to MCP server...');
+        await mcpClient.connect();
+        updateStatusBar('connected');
         refreshAllViews();
+        console.log('In Memoria Visualizer: Connected successfully');
+      } catch (error: any) {
+        console.error('In Memoria Visualizer: Connection failed:', error);
+        updateStatusBar('disconnected', error.message);
+        vscode.window.showWarningMessage(
+          `Could not connect to In Memoria server: ${error.message}. Run "npx in-memoria server" in your terminal.`
+        );
       }
-    }, refreshInterval);
+    }
+
+    // Set up auto-refresh if configured
+    const refreshInterval = config.get('refreshInterval', 30000);
+    if (refreshInterval > 0) {
+      setInterval(() => {
+        if (mcpClient.isConnected()) {
+          refreshAllViews();
+        }
+      }, refreshInterval);
+    }
+
+    console.log('In Memoria Visualizer: Activation complete!');
+  } catch (error: any) {
+    console.error('In Memoria Visualizer: Activation failed:', error);
+    vscode.window.showErrorMessage(`In Memoria Visualizer failed to activate: ${error.message}`);
+    throw error;
   }
 }
 
